@@ -1,21 +1,72 @@
 # Bubble Tea Components
 
-Production-ready reusable components for [Bubble Tea](https://github.com/charmbracelet/bubbletea) applications.
+Stop rewriting picker boilerplate. These components handle standard key bindings, window resizing, border rendering, and selection state — the 60-70% of every Bubble Tea picker that's always the same.
+
+Used in production in [shelfctl](https://github.com/blackwell-systems/shelfctl), a TUI library manager built on all three components.
 
 ## Components
 
 ### Base Picker
-Foundation for building picker components. Handles standard key bindings, window resizing, border rendering, and selection logic. Reduces boilerplate by 60-70%.
+
+Foundation for building picker components. Handles key bindings, window resizing, border rendering, error handling, and selection logic so you don't have to.
+
+**Before:**
+
+```go
+func (m myPickerModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+    switch msg := msg.(type) {
+    case tea.KeyMsg:
+        if m.list.FilterState() == list.Filtering {
+            break
+        }
+        switch msg.String() {
+        case "q", "esc", "ctrl+c":
+            m.quitting = true
+            m.err = fmt.Errorf("canceled")
+            return m, tea.Quit
+        case "enter":
+            item := m.list.SelectedItem().(MyItem)
+            m.selected = item.name
+            m.quitting = true
+            return m, tea.Quit
+        }
+    case tea.WindowSizeMsg:
+        h, v := StyleBorder.GetFrameSize()
+        m.list.SetSize(msg.Width-h, msg.Height-v)
+    }
+
+    var cmd tea.Cmd
+    m.list, cmd = m.list.Update(msg)
+    return m, cmd
+}
+```
+
+**After:**
+
+```go
+func (m myPickerModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+    cmd := m.base.Update(msg)
+
+    if m.base.IsQuitting() && m.base.Error() == nil {
+        item := m.base.SelectedItem().(MyItem)
+        m.selected = item.name
+    }
+
+    return m, cmd
+}
+```
 
 [Documentation →](picker/README.md)
 
 ### Multi-Select
-Generic multi-selection wrapper that works with any `list.Item`. Adds checkbox UI with persistent state across view changes.
+
+Generic multi-selection wrapper that works with any `list.Item`. Adds checkbox UI (`[ ]` / `[✓]`) with persistent selection state across view changes — useful when navigating directories or paginated lists.
 
 [Documentation →](multiselect/README.md)
 
 ### Miller Columns
-Hierarchical navigation layout inspired by macOS Finder. Display multiple directory levels side-by-side for visual context.
+
+Hierarchical navigation layout inspired by macOS Finder. Display multiple directory levels side-by-side for visual context, with keyboard-driven focus management and automatic column resizing.
 
 ![Miller Columns screenshot](millercolumns/miller_columns.png)
 
@@ -27,25 +78,11 @@ Hierarchical navigation layout inspired by macOS Finder. Display multiple direct
 go get github.com/blackwell-systems/bubbletea-components
 ```
 
-## Usage
-
-```go
-import (
-    "github.com/blackwell-systems/bubbletea-components/picker"
-    "github.com/blackwell-systems/bubbletea-components/multiselect"
-    "github.com/blackwell-systems/bubbletea-components/millercolumns"
-)
-```
-
 ## Dependencies
 
 - `github.com/charmbracelet/bubbles` - List and input components
 - `github.com/charmbracelet/bubbletea` - TUI framework
 - `github.com/charmbracelet/lipgloss` - Styling
-
-## Production Use
-
-These components are used in [shelfctl](https://github.com/blackwell-systems/shelfctl), a personal library manager that organizes PDFs using GitHub Release assets.
 
 ## Contributing
 

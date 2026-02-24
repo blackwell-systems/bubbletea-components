@@ -2,7 +2,7 @@
 
 Stop rewriting picker boilerplate. These components handle standard key bindings, window resizing, border rendering, and selection state — the 60-70% of every Bubble Tea picker that's always the same.
 
-Used in production in [shelfctl](https://github.com/blackwell-systems/shelfctl), a TUI library manager built on all four components.
+Used in production in [shelfctl](https://github.com/blackwell-systems/shelfctl), a TUI library manager built on all five components.
 
 ## Components
 
@@ -80,6 +80,12 @@ Peeking single-row card layout where the active card is centered at full width a
 
 [Documentation →](carousel/README.md)
 
+### Command Palette
+
+Fuzzy-search overlay over a flat list of actions — VS Code `Ctrl+P` style. Type to filter, Enter to execute, Esc to dismiss. Caller controls open/close; component handles filtering, navigation, and rendering.
+
+[Documentation →](commandpalette/README.md)
+
 ## Installation
 
 ```bash
@@ -92,6 +98,7 @@ go get github.com/blackwell-systems/bubbletea-components
 - `github.com/charmbracelet/bubbletea` - TUI framework
 - `github.com/charmbracelet/lipgloss` - Styling
 - `github.com/charmbracelet/x/ansi` - ANSI-aware string width and truncation
+- `github.com/sahilm/fuzzy` - Fuzzy string matching (command palette)
 
 ## Contributing
 

@@ -2,6 +2,8 @@
 
 A reusable [Bubble Tea](https://github.com/charmbracelet/bubbletea) component for hierarchical navigation using Miller columns (like macOS Finder's column view).
 
+![Miller Columns screenshot](miller_columns.png)
+
 ## Features
 
 - **Hierarchical Navigation**: Display multiple levels side-by-side for visual context

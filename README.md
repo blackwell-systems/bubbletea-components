@@ -17,6 +17,8 @@ Generic multi-selection wrapper that works with any `list.Item`. Adds checkbox U
 ### Miller Columns
 Hierarchical navigation layout inspired by macOS Finder. Display multiple directory levels side-by-side for visual context.
 
+![Miller Columns screenshot](millercolumns/miller_columns.png)
+
 [Documentation →](millercolumns/README.md)
 
 ## Installation

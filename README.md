@@ -2,7 +2,7 @@
 
 Stop rewriting picker boilerplate. These components handle standard key bindings, window resizing, border rendering, and selection state — the 60-70% of every Bubble Tea picker that's always the same.
 
-Used in production in [shelfctl](https://github.com/blackwell-systems/shelfctl), a TUI library manager built on all three components.
+Used in production in [shelfctl](https://github.com/blackwell-systems/shelfctl), a TUI library manager built on all four components.
 
 ## Components
 
@@ -72,6 +72,12 @@ Hierarchical navigation layout inspired by macOS Finder. Display multiple direct
 
 [Documentation →](millercolumns/README.md)
 
+### Carousel
+
+Peeking single-row card layout where the active card is centered at full width and adjacent cards peek in from both sides. Supports a delegate interface for custom card content, marked-state coloring, a dot position indicator, and caller-appended footer hints.
+
+[Documentation →](carousel/README.md)
+
 ## Installation
 
 ```bash
@@ -83,6 +89,7 @@ go get github.com/blackwell-systems/bubbletea-components
 - `github.com/charmbracelet/bubbles` - List and input components
 - `github.com/charmbracelet/bubbletea` - TUI framework
 - `github.com/charmbracelet/lipgloss` - Styling
+- `github.com/charmbracelet/x/ansi` - ANSI-aware string width and truncation
 
 ## Contributing
 

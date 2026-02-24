@@ -328,25 +328,6 @@ mc := millercolumns.New(millercolumns.Config{
 - Tree viewers (nodes → children → grandchildren)
 - Hierarchical data exploration
 
-## Extracting to Standalone Repository
-
-This package has zero dependencies on `shelfctl` internals. To extract:
-
-1. Copy `millercolumns/` directory to new repo
-2. Update import paths in examples
-3. Add `go.mod`:
-   ```go
-   module github.com/yourorg/millercolumns
-
-   require (
-       github.com/charmbracelet/bubbles v0.18.0
-       github.com/charmbracelet/bubbletea v0.25.0
-       github.com/charmbracelet/lipgloss v0.10.0
-   )
-   ```
-
-No code changes needed!
-
 ## License
 
 Same as parent project.

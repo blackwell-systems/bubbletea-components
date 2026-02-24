@@ -2,6 +2,8 @@
 
 A peeking single-row card carousel for [Bubble Tea](https://github.com/charmbracelet/bubbletea). The active card occupies the center at full width; adjacent cards peek in from both sides to give the user a sense of what comes next.
 
+![Carousel demo](carousel_demo.gif)
+
 ## Features
 
 - **Peeking layout**: Adjacent cards peek from both sides so users always see context

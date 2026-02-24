@@ -76,6 +76,8 @@ Hierarchical navigation layout inspired by macOS Finder. Display multiple direct
 
 Peeking single-row card layout where the active card is centered at full width and adjacent cards peek in from both sides. Supports a delegate interface for custom card content, marked-state coloring, a dot position indicator, and caller-appended footer hints.
 
+![Carousel demo](carousel/carousel_demo.gif)
+
 [Documentation →](carousel/README.md)
 
 ## Installation

@@ -20,7 +20,7 @@ package main
 
 import (
     "fmt"
-github.com/blackwell-systems/bubbletea-components/picker
+    "github.com/blackwell-systems/bubbletea-components/picker"
     "github.com/charmbracelet/bubbles/list"
     tea "github.com/charmbracelet/bubbletea"
 )

@@ -1,108 +1,36 @@
 # Bubble Tea Components
 
-Stop rewriting picker boilerplate. These components handle standard key bindings, window resizing, border rendering, and selection state — the 60-70% of every Bubble Tea picker that's always the same.
-
-Used in production in [shelfctl](https://github.com/blackwell-systems/shelfctl), a TUI library manager built on all five components.
+> **This repository has been split into individual packages.** Each component now lives in its own repo for independent versioning and lighter dependency trees.
 
 ## Components
 
-### Base Picker
+| Component | Repository | Description |
+|-----------|-----------|-------------|
+| **Base Picker** | [bubbletea-picker](https://github.com/blackwell-systems/bubbletea-picker) | Foundation for picker components — handles key bindings, window resizing, border rendering, and selection logic |
+| **Multi-Select** | [bubbletea-multiselect](https://github.com/blackwell-systems/bubbletea-multiselect) | Generic multi-selection wrapper with checkbox UI and persistent selection state |
+| **Miller Columns** | [bubbletea-millercolumns](https://github.com/blackwell-systems/bubbletea-millercolumns) | Hierarchical navigation layout inspired by macOS Finder |
+| **Carousel** | [bubbletea-carousel](https://github.com/blackwell-systems/bubbletea-carousel) | Peeking single-row card layout with centered active card and adjacent previews |
+| **Command Palette** | [bubbletea-commandpalette](https://github.com/blackwell-systems/bubbletea-commandpalette) | Fuzzy-search overlay for actions — VS Code Ctrl+P style |
 
-Foundation for building picker components. Handles key bindings, window resizing, border rendering, error handling, and selection logic so you don't have to.
+## Migration
 
-**Before:**
-
-```go
-func (m myPickerModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-    switch msg := msg.(type) {
-    case tea.KeyMsg:
-        if m.list.FilterState() == list.Filtering {
-            break
-        }
-        switch msg.String() {
-        case "q", "esc", "ctrl+c":
-            m.quitting = true
-            m.err = fmt.Errorf("canceled")
-            return m, tea.Quit
-        case "enter":
-            item := m.list.SelectedItem().(MyItem)
-            m.selected = item.name
-            m.quitting = true
-            return m, tea.Quit
-        }
-    case tea.WindowSizeMsg:
-        h, v := StyleBorder.GetFrameSize()
-        m.list.SetSize(msg.Width-h, msg.Height-v)
-    }
-
-    var cmd tea.Cmd
-    m.list, cmd = m.list.Update(msg)
-    return m, cmd
-}
-```
-
-**After:**
+Replace your import:
 
 ```go
-func (m myPickerModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-    cmd := m.base.Update(msg)
+// Before
+import "github.com/blackwell-systems/bubbletea-components/picker"
 
-    if m.base.IsQuitting() && m.base.Error() == nil {
-        item := m.base.SelectedItem().(MyItem)
-        m.selected = item.name
-    }
-
-    return m, cmd
-}
+// After
+import "github.com/blackwell-systems/bubbletea-picker"
 ```
 
-[Documentation →](picker/README.md)
-
-### Multi-Select
-
-Generic multi-selection wrapper that works with any `list.Item`. Adds checkbox UI (`[ ]` / `[✓]`) with persistent selection state across view changes — useful when navigating directories or paginated lists.
-
-[Documentation →](multiselect/README.md)
-
-### Miller Columns
-
-Hierarchical navigation layout inspired by macOS Finder. Display multiple directory levels side-by-side for visual context, with keyboard-driven focus management and automatic column resizing.
-
-![Miller Columns screenshot](millercolumns/miller_columns.png)
-
-[Documentation →](millercolumns/README.md)
-
-### Carousel
-
-Peeking single-row card layout where the active card is centered at full width and adjacent cards peek in from both sides. Supports a delegate interface for custom card content, marked-state coloring, a dot position indicator, and caller-appended footer hints.
-
-![Carousel demo](carousel/carousel_demo.gif)
-
-[Documentation →](carousel/README.md)
-
-### Command Palette
-
-Fuzzy-search overlay over a flat list of actions — VS Code `Ctrl+P` style. Type to filter, Enter to execute, Esc to dismiss. Caller controls open/close; component handles filtering, navigation, and rendering.
-
-[Documentation →](commandpalette/README.md)
-
-## Installation
+Then run:
 
 ```bash
-go get github.com/blackwell-systems/bubbletea-components
+go get github.com/blackwell-systems/bubbletea-picker@v0.1.0
 ```
 
-## Dependencies
-
-- `github.com/charmbracelet/bubbles` - List and input components
-- `github.com/charmbracelet/bubbletea` - TUI framework
-- `github.com/charmbracelet/lipgloss` - Styling
-- `github.com/charmbracelet/x/ansi` - ANSI-aware string width and truncation
-- `github.com/sahilm/fuzzy` - Fuzzy string matching (command palette)
-
-## Contributing
-
-Contributions welcome! Please open an issue before starting work on major changes.
+Repeat for each component you use.
 
 ## License
 
